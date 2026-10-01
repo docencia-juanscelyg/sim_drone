@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<robot name="rotor" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!-- ROTOR XACRO -->
+  <xacro:macro name="rotor_ccw" params="prefix parent *origin">
+
+    <!--ROTOR -->
+    <joint name="rotor_${prefix}_joint" type="continuous">
+        <xacro:insert_block name="origin" />
+        <parent link="${parent}"/>
+        <child link="rotor_${prefix}_link"/>
+        <axis xyz="0 0 1" rpy="0 0 0" />
+        <limit effort="5000" velocity="100"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="rotor_${prefix}_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="0.02975" ixy="0" ixz="0" iyy="0.03087" iyz="0" izz="0.00191"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="file://$(find sim_drone)/meshes/dae/prop_ccw.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.02"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo>
+        <plugin filename="gz-sim-multicopter-motor-model-system"
+            name="gz::sim::systems::MulticopterMotorModel">
+        <jointName>rotor_${prefix}_joint</jointName>
+        <linkName>rotor_${prefix}_link</linkName>
+        <turningDirection>ccw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>1000.0</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>command/motor_${prefix}_speed</commandSubTopic>
+        <actuator_number>${prefix}</actuator_number>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+        <motorType>velocity</motorType>
+        </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="rotor_cw" params="prefix parent *origin">
+
+    <!--ROTOR -->
+    <joint name="rotor_${prefix}_joint" type="continuous">
+        <xacro:insert_block name="origin" />
+        <parent link="${parent}"/>
+        <child link="rotor_${prefix}_link"/>
+        <axis xyz="0 0 1" rpy="0 0 0" />
+        <limit effort="5000" velocity="100"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="rotor_${prefix}_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="0.02975" ixy="0" ixz="0" iyy="0.03087" iyz="0" izz="0.00191"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="file://$(find sim_drone)/meshes/dae/prop_cw.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.02"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo>
+        <plugin filename="gz-sim-multicopter-motor-model-system"
+            name="gz::sim::systems::MulticopterMotorModel">
+        <jointName>rotor_${prefix}_joint</jointName>
+        <linkName>rotor_${prefix}_link</linkName>
+        <turningDirection>cw</turningDirection>
+        <timeConstantUp>0.0125</timeConstantUp>
+        <timeConstantDown>0.025</timeConstantDown>
+        <maxRotVelocity>1000.0</maxRotVelocity>
+        <motorConstant>8.54858e-06</motorConstant>
+        <momentConstant>0.016</momentConstant>
+        <commandSubTopic>command/motor_${prefix}_speed</commandSubTopic>
+        <actuator_number>${prefix}</actuator_number>
+        <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+        <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+        <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+        <motorType>velocity</motorType>
+        </plugin>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

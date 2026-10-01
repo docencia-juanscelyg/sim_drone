@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot name="base" xmlns:xacro="http://wiki.ros.org/xacro">
+    <xacro:macro name="base" params="prefix">
+
+        <!-- Robot mechanical and motor parameters -->
+        <xacro:property name="PI" value="3.1415926535897931"/>
+        
+        <!-- BASE LINK -->
+        <link name="${prefix}base_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="1.0"/>
+                <inertia  ixx="0.017" ixy="0.0"  ixz="0.0"  iyy="0.017"  iyz="0.0"  izz="0.034" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="file://$(find sim_drone)/meshes/dae/final_drone.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="file://$(find sim_drone)/meshes/dae/final_drone.dae"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <gazebo>
+            <plugin filename="gz-sim-odometry-publisher-system"
+                name="gz::sim::systems::OdometryPublisher">
+            <odom_frame>odom_gt</odom_frame>
+            <robot_base_frame>${prefix}base_link</robot_base_frame>
+            </plugin>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

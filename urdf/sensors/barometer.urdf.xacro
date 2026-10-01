@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="barometer_sensor" xmlns:xacro="http://wiki.ros.org/xacro">
+    <!-- ######### BAROMETER ######### -->
+    <xacro:macro name="sensor_barometer" params="prefix ns:='' topic:='pressure' parent *origin">
+        <joint name="${prefix}_joint" type="fixed">
+            <axis xyz="1 0 0"/>
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}"/>
+            <child link="${prefix}_link"/>
+        </joint>
+
+        <link name="${prefix}_link">
+            <inertial>
+                <origin xyz="0.0 0 0.0" rpy="0 0 0" />
+                <mass value="0.002" />
+                <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.003" length="0.005"/>
+                </geometry>
+                <material name="sensor_material">
+                    <color rgba="0.2 0.2 0.2 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.003" length="0.005"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <gazebo reference="${prefix}_link">
+            <sensor name="${prefix}_sensor" type="air_pressure">
+                <always_on>true</always_on>
+                <update_rate>50</update_rate>
+                <topic>${topic}</topic>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+</robot>

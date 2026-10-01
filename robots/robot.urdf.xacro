@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot name="drone" xmlns:xacro="http://wiki.ros.org/xacro">
+    <!-- includes -->
+    <xacro:include filename="$(find sim_drone)/urdf/base/base.urdf.xacro"/>
+    <xacro:include filename="$(find sim_drone)/urdf/rotor/rotor.urdf.xacro"/>
+    <xacro:include filename="$(find sim_drone)/urdf/sensors/imu_sensor.urdf.xacro"/>
+    <xacro:include filename="$(find sim_drone)/urdf/sensors/barometer.urdf.xacro"/>
+
+    <!-- Propiedades -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="rotor_offset_x" value="0.04025"/>
+    <xacro:property name="rotor_offset_y" value="0.04025"/>
+    <xacro:property name="rotor_offset_z" value="0.01"/>
+
+    <!-- argumentos -->
+    <xacro:arg name="robot_ns" default=""/>
+    <xacro:arg name="prefix" default=""/>
+
+    <!-- Robot Parts -->
+    <!-- Base -->
+    <xacro:base prefix="$(arg prefix)"/>
+    <!-- rotors -->
+    <xacro:rotor_cw prefix="1" parent="base_link">
+        <origin xyz="${rotor_offset_x} ${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
+    </xacro:rotor_cw>
+    <xacro:rotor_ccw prefix="2" parent="base_link">
+        <origin xyz="${rotor_offset_x} -${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
+    </xacro:rotor_ccw>
+    <xacro:rotor_cw prefix="3" parent="base_link">
+        <origin xyz="-${rotor_offset_x} ${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
+    </xacro:rotor_cw>
+    <xacro:rotor_ccw prefix="4" parent="base_link">
+        <origin xyz="-${rotor_offset_x} -${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
+    </xacro:rotor_ccw>
+
+    <!-- sensores -->
+    <xacro:sensor_imu ns="$(arg robot_ns)" prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:sensor_imu>
+    <xacro:sensor_barometer ns="$(arg robot_ns)" prefix="$(arg prefix)barometer" parent="$(arg prefix)base_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:sensor_barometer>
+
+</robot>
