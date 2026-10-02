@@ -20,16 +20,16 @@
     <!-- Base -->
     <xacro:base prefix="$(arg prefix)"/>
     <!-- rotors -->
-    <xacro:rotor_cw prefix="1" parent="base_link">
+    <xacro:rotor_ccw prefix="0" parent="base_link">
         <origin xyz="${rotor_offset_x} ${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
-    </xacro:rotor_cw>
-    <xacro:rotor_ccw prefix="2" parent="base_link">
-        <origin xyz="${rotor_offset_x} -${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
     </xacro:rotor_ccw>
-    <xacro:rotor_cw prefix="3" parent="base_link">
+    <xacro:rotor_cw prefix="1" parent="base_link">
+        <origin xyz="${rotor_offset_x} -${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
+    </xacro:rotor_cw>
+    <xacro:rotor_cw prefix="2" parent="base_link">
         <origin xyz="-${rotor_offset_x} ${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
     </xacro:rotor_cw>
-    <xacro:rotor_ccw prefix="4" parent="base_link">
+    <xacro:rotor_ccw prefix="3" parent="base_link">
         <origin xyz="-${rotor_offset_x} -${rotor_offset_y} ${rotor_offset_z}" rpy="0 0 0"/>
     </xacro:rotor_ccw>
 
@@ -40,5 +40,33 @@
     <xacro:sensor_barometer ns="$(arg robot_ns)" prefix="$(arg prefix)barometer" parent="$(arg prefix)base_link">
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </xacro:sensor_barometer>
+
+    <!-- Plugins -->
+    <plugin
+      filename="gz-sim-pose-publisher-system"
+      name="gz::sim::systems::PosePublisher">
+      <publish_link_pose>true</publish_link_pose>
+      <publish_model_pose>false</publish_model_pose>
+      <publish_sensor_pose>true</publish_sensor_pose>
+      <publish_visual_pose>false</publish_visual_pose>
+      <publish_nested_model_pose>true</publish_nested_model_pose>
+      <use_pose_vector_msg>true</use_pose_vector_msg>
+      <static_publisher>true</static_publisher>
+    </plugin>
+    <plugin filename="gz-sim-joint-state-publisher-system" 
+        name="gz::sim::systems::JointStatePublisher">
+      <topic>joint_states</topic>
+      <joint>rotor_0_joint</joint>
+      <joint>rotor_1_joint</joint>
+      <joint>rotor_2_joint</joint>
+      <joint>rotor_3_joint</joint>
+    </plugin> 
+        <plugin
+      filename="gz-sim-odometry-publisher-system"
+      name="gz::sim::systems::OdometryPublisher">
+      <dimensions>3</dimensions>
+      <odom_frame>odom</odom_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
 
 </robot>

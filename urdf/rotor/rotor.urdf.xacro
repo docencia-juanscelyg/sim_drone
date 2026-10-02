@@ -10,14 +10,14 @@
         <parent link="${parent}"/>
         <child link="rotor_${prefix}_link"/>
         <axis xyz="0 0 1" rpy="0 0 0" />
-        <limit effort="5000" velocity="100"/>
+        <limit effort="5000" velocity="10000"/>
         <dynamics damping="0.05" friction="0.1"/>
     </joint>
 
     <link name="rotor_${prefix}_link">
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-            <mass value="10.0"/>
+            <mass value="0.005"/>
             <inertia ixx="0.02975" ixy="0" ixz="0" iyy="0.03087" iyz="0" izz="0.00191"/>
         </inertial>
         <visual>
@@ -42,10 +42,10 @@
         <turningDirection>ccw</turningDirection>
         <timeConstantUp>0.0125</timeConstantUp>
         <timeConstantDown>0.025</timeConstantDown>
-        <maxRotVelocity>1000.0</maxRotVelocity>
-        <motorConstant>8.54858e-06</motorConstant>
-        <momentConstant>0.016</momentConstant>
-        <commandSubTopic>command/motor_${prefix}_speed</commandSubTopic>
+        <maxRotVelocity>4760.0</maxRotVelocity>
+        <motorConstant>3.3e-08</motorConstant>
+        <momentConstant>0.0016</momentConstant>
+        <commandSubTopic>command/motor_speed</commandSubTopic>
         <actuator_number>${prefix}</actuator_number>
         <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
         <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
@@ -63,14 +63,14 @@
         <parent link="${parent}"/>
         <child link="rotor_${prefix}_link"/>
         <axis xyz="0 0 1" rpy="0 0 0" />
-        <limit effort="5000" velocity="100"/>
+        <limit effort="5000" velocity="10000"/>
         <dynamics damping="0.05" friction="0.1"/>
     </joint>
 
     <link name="rotor_${prefix}_link">
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-            <mass value="10.0"/>
+            <mass value="0.005"/>
             <inertia ixx="0.02975" ixy="0" ixz="0" iyy="0.03087" iyz="0" izz="0.00191"/>
         </inertial>
         <visual>
@@ -95,10 +95,10 @@
         <turningDirection>cw</turningDirection>
         <timeConstantUp>0.0125</timeConstantUp>
         <timeConstantDown>0.025</timeConstantDown>
-        <maxRotVelocity>1000.0</maxRotVelocity>
-        <motorConstant>8.54858e-06</motorConstant>
-        <momentConstant>0.016</momentConstant>
-        <commandSubTopic>command/motor_${prefix}_speed</commandSubTopic>
+        <maxRotVelocity>4760.0</maxRotVelocity>
+        <motorConstant>3.3e-08</motorConstant>
+        <momentConstant>0.0016</momentConstant>
+        <commandSubTopic>command/motor_speed</commandSubTopic>
         <actuator_number>${prefix}</actuator_number>
         <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
         <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
