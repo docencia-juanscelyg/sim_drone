@@ -1,29 +1,23 @@
-# sim_drone_ws
+# sim_drone
 
-Workspace de ROS 2 para ejecutar y probar una simulación de dron (Sin autopiloto). El workspace reúne paquetes ROS; cada paquete aporta nodos, configuración y, cuando corresponde, archivos de lanzamiento. El flujo habitual es compilar el workspace, cargar su entorno y lanzar la simulación.
+Ambiente de simulación en Gazebo y ROS 2 de dron (Sin autopiloto).
 
 ![Simulación de Dron en Gazebo](doc/img0.jpg)
 
 ## Requisitos
 
-- Una instalación de ROS 2 compatible con los paquetes del proyecto.
+- Una instalación de ROS 2 Jazzy.
 - `colcon` y las dependencias declaradas por los paquetes.
 - La herramienta de simulación que requiera el proyecto (por ejemplo, Gazebo), si aplica.
 
-Abre una terminal en la raíz del workspace (`sim_drone_ws`) y carga ROS 2. Sustituye `jazzy` por la distribución instalada:
-
-```bash
-source /opt/ros/jazzy/setup.bash
-```
-
 ## Compilar
 
-Instala las dependencias disponibles en los manifiestos y compila:
+Instala las dependencias requeridas y compila:
 
 ```bash
 cd {ros workspace}
 rosdep install --from-paths src --ignore-src -r -y
-colcon build
+colcon build --symlink-install
 source install/setup.bash
 ```
 
@@ -38,6 +32,7 @@ ros2 launch sim_drone sim_gazebo.launch.py
 ```
 
 Este launch file inicia:
+
 - El servidor de Gazebo con el mundo personalizado (`drone_world.sdf`)
 - La interfaz gráfica de Gazebo
 - El robot state publisher para cargar la descripción del robot
@@ -46,3 +41,4 @@ Este launch file inicia:
 
 El mundo incluye el plugin de IMU y de barometer, y está configurado para proporcionar una plataforma de simulación realista para el dron.
 
+En el se pueden llevar a cabo pruebas de control, así como la integración de sensores y algoritmos de navegación.
