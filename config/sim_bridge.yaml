@@ -45,3 +45,4 @@
   gz_type_name: "gz.msgs.Actuators"
   direction: ROS_TO_GZ
   lazy: false
+  qos_profile: SENSOR_DATA
